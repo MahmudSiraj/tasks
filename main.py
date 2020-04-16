@@ -4,37 +4,97 @@ import argparse
 def main():
     parser = argparse.ArgumentParser(description="Processes the commands passed to the task app.")
 
-    parser.add_argument("--add",
-                        nargs='*',
-                        default=argparse.SUPPRESS,
-                        help="add a task and completion date",
-                        metavar=('<description>', '<date>'),
-                        dest='task'
-                        )
+    subparsers = parser.add_subparsers()
 
-    parser.add_argument("-p",
-                        action='store_true',
-                        default=False,
-                        help="set as high-priority",
-                        dest='high_priority')
+    subparser_add = subparsers.add_parser('add')
 
-    parser.add_argument("--list")
+    subparser_add.add_argument(nargs='+',
+                               default=[],
+                               help="add a task and completion date",
+                               metavar=('[<task_id>], <description>', '<date>'),
+                               dest='task'
+                               )
 
-    parser.add_argument("-c")
+    subparser_add.add_argument("-p",
+                               action="store_true",
+                               default=False,
+                               help="set as high-priority",
+                               dest='high_priority')
 
-    parser.add_argument("-a")
+    subparser_add.add_argument("-s", "--subtask",
+                               action="store_true",
+                               default=False,
+                               help="set as a subtask",
+                               dest='subtask')
 
-    parser.add_argument("-r")
+    subparser_list = subparsers.add_parser('list')
 
-    parser.add_argument("--add-subtask")
+    subparser_list.add_argument(nargs='?',
+                                default=argparse.SUPPRESS,
+                                help='list the tasks',
+                                metavar="<task_id>",
+                                dest="task")
 
-    parser.add_argument("--edit")
+    subparser_list.add_argument('-a', '--all',
+                                action='store_true',
+                                default=False,
+                                help='list all the tasks',
+                                dest="list_all")
 
-    parser.add_argument("--update")
+    subparser_list.add_argument('-c', '--completed',
+                                action='store_true',
+                                default=False,
+                                help='list only completed tasks',
+                                dest="list_completed")
 
-    parser.add_argument("--update-subtask")
+    subparser_list.add_argument('-s', '--subtasks',
+                                action='store_true',
+                                default=False,
+                                help='list subtasks too',
+                                dest="list_subtasks")
 
+    subparser_edit = subparsers.add_parser('edit')
 
+    subparser_edit.add_argument(nargs='+',
+                                default=argparse.SUPPRESS,
+                                help='edit a task',
+                                metavar=('<task_id>', '<description>', '<date>'),
+                                dest="task")
 
+    subparser_edit.add_argument("-p",
+                                action="store_true",
+                                default=False,
+                                help="set as high-priority",
+                                dest='high_priority')
 
+    subparser_edit.add_argument("-s", "--subtask",
+                                action="store_true",
+                                default=False,
+                                help="mark as subtask",
+                                dest='subtask')
 
+    subparser_update = subparsers.add_parser('update')
+
+    subparser_update.add_argument(nargs='1',
+                                  default=argparse.SUPPRESS,
+                                  help='update a task',
+                                  metavar=('<task_id>'),
+                                  dest="task")
+
+    subparser_update.add_argument("-s", "--subtask",
+                                  action="store_true",
+                                  default=False,
+                                  help="mark as subtask",
+                                  dest='subtask')
+
+    subparser_update.add_argument("-c", "--complete",
+                                  action="store_true",
+                                  default=False,
+                                  help="mark as complete",
+                                  dest='complete')
+
+    subparser_update.add_argument("-r", "--remove",
+                                  action="store_true",
+                                  default=False,
+                                  help="remove task",
+                                  dest='remove')
