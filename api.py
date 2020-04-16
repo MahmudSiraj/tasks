@@ -1,11 +1,14 @@
 from datetime import datetime
+from collections import namedtuple
+
+# use namedtuple to for records being read in from the database
 
 class Task:
     """Super class for both tasks and subtasks. Constructs a task and provides skeleton CRUD operations."""
 
     def __init__(self, description, due_date, high_importance, completed):
         self.description = description
-        self.due_date = due_date  # construct a datetime object to make time deltas and comparisons easier
+        self.due_date = datetime(due_date)  # construct a datetime object to make time deltas and comparisons easier
         self.high_importance = high_importance
         self.completed = completed
 
