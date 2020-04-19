@@ -1,7 +1,14 @@
 import argparse
+import sqlite3
+from api import *
 
 
 def main():
+
+    # database connection
+    conn_tasks = sqlite3.Connection("tasks.db")
+    conn_subtasks = sqlite3.Connection("subtasks.db")
+
     parser = argparse.ArgumentParser(description="Processes the commands passed to the task app.")
 
     subparsers = parser.add_subparsers()
@@ -78,7 +85,7 @@ def main():
     subparser_update.add_argument(nargs='1',
                                   default=argparse.SUPPRESS,
                                   help='update a task',
-                                  metavar=('<task_id>'),
+                                  metavar='<task_id>',
                                   dest="task")
 
     subparser_update.add_argument("-s", "--subtask",
