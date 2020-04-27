@@ -26,5 +26,6 @@ conn_subtasks.close()
 
 # sqlite3.register_converter() and sqlite3.register_adapter() to convert timestrings
 # row_factory = sqlite3.Row
+# replace with ORM
 
 

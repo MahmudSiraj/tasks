@@ -3,6 +3,25 @@ import sqlite3
 from api import *
 
 
+class Task(NamedTuple):
+    id: int
+    description: str
+    due_date: datetime
+    high_priority: bool
+    completed: bool
+
+
+class SubTask(NamedTuple):
+    id: int
+    task_id: int
+    description: str
+    due_date: datetime
+    high_priority: bool
+    completed: bool
+
+
+
+
 def main():
 
     # database connection
